@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#08090b">
+    <meta name="description" content="A special birthday gift for Mỹ Linh.">
+    <title>For Mỹ Linh</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="stars"></div>
+
+    <main class="card" id="giftCard">
+        <div class="eyebrow">FOR SOMEONE SPECIAL</div>
+        <h1>MỸ LINH</h1>
+        <div class="line"></div>
+
+        <p class="message">Một món quà nhỏ dành riêng cho chị.</p>
+
+        <button class="watch-button" id="watchButton" type="button">
+            <span class="play-icon">▶</span>
+            <span>XEM VIDEO</span>
+        </button>
+
+        <p class="hint">Chạm để mở một điều đặc biệt ❤️</p>
+    </main>
+
+    <section class="video-screen" id="videoScreen" aria-hidden="true">
+        <button class="close-button" id="closeButton" type="button" aria-label="Đóng">×</button>
+
+        <div class="video-shell">
+            <video
+                id="birthdayVideo"
+                controls
+                playsinline
+                preload="metadata"
+                controlsList="nodownload"
+                poster=""
+            >
+                <source src="birthday_mylinh_web_1080p.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video.
+            </video>
+        </div>
+
+        <div class="video-title">MỸ LINH</div>
+    </section>
+</div>
+
+<script>
+const watchButton = document.getElementById("watchButton");
+const closeButton = document.getElementById("closeButton");
+const videoScreen = document.getElementById("videoScreen");
+const video = document.getElementById("birthdayVideo");
+const giftCard = document.getElementById("giftCard");
+
+function openVideo() {
+    videoScreen.classList.add("show");
+    videoScreen.setAttribute("aria-hidden", "false");
+    document.body.classList.add("video-open");
+    giftCard.classList.add("hide-card");
+
+    video.currentTime = 0;
+
+    // Play after the user's tap. This is allowed by mobile browsers.
+    video.play().catch(() => {});
+}
+
+function closeVideo() {
+    video.pause();
+    video.currentTime = 0;
+    videoScreen.classList.remove("show");
+    videoScreen.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("video-open");
+    giftCard.classList.remove("hide-card");
+}
+
+watchButton.addEventListener("click", openVideo);
+closeButton.addEventListener("click", closeVideo);
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && videoScreen.classList.contains("show")) {
+        closeVideo();
+    }
+});
+
+video.addEventListener("ended", () => {
+    // Keep the final frame visible; the viewer can replay from the controls.
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --gold: #f1dca7;
+    --gold-soft: rgba(241, 220, 167, 0.72);
+    --white-soft: rgba(255, 255, 255, 0.78);
+    --bg: #08090b;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    color: white;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    overflow: hidden;
+}
+
+.page {
+    position: relative;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 35%, #273329 0%, #111612 35%, #08090b 76%);
+}
+
+.ambient {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+}
+
+.ambient-1 {
+    left: -220px;
+    top: -220px;
+    background: #d6b66c;
+    opacity: 0.13;
+}
+
+.ambient-2 {
+    right: -230px;
+    bottom: -250px;
+    background: #71886b;
+    opacity: 0.13;
+}
+
+.stars {
+    position: absolute;
+    inset: 0;
+    opacity: 0.28;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.55) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(241,220,167,.35) 0 1px, transparent 1.5px);
+    background-size: 150px 150px, 220px 220px;
+    background-position: 15px 30px, 90px 110px;
+    pointer-events: none;
+}
+
+.card {
+    position: relative;
+    z-index: 5;
+    width: min(90%, 600px);
+    padding: 70px 40px;
+    text-align: center;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 24px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 30px 100px rgba(0,0,0,.55);
+    transition: opacity .45s ease, transform .45s ease;
+}
+
+.card.hide-card {
+    opacity: 0;
+    transform: scale(.97);
+    pointer-events: none;
+}
+
+.eyebrow {
+    font-size: 11px;
+    letter-spacing: .45em;
+    margin-left: .45em;
+    color: rgba(255,245,215,.75);
+}
+
+h1 {
+    margin: 18px 0 0;
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 10vw, 82px);
+    font-weight: 400;
+    letter-spacing: .12em;
+    margin-left: .12em;
+    color: var(--gold);
+    text-shadow:
+        0 0 30px rgba(241,220,167,.18),
+        0 10px 40px rgba(0,0,0,.45);
+}
+
+.line {
+    width: 55px;
+    height: 1px;
+    margin: 25px auto;
+    background: rgba(241,220,167,.65);
+    box-shadow: 0 0 14px rgba(241,220,167,.18);
+}
+
+.message {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--white-soft);
+}
+
+.watch-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 35px;
+    padding: 15px 31px;
+    border: 1px solid rgba(241,220,167,.65);
+    border-radius: 100px;
+    background: rgba(241,220,167,.08);
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: .18em;
+    cursor: pointer;
+    transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.watch-button:hover {
+    background: rgba(241,220,167,.17);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(241,220,167,.12);
+}
+
+.watch-button:active {
+    transform: scale(.97);
+}
+
+.play-icon {
+    font-size: 12px;
+}
+
+.hint {
+    margin-top: 18px;
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: rgba(255,255,255,.45);
+}
+
+.video-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background:
+        radial-gradient(circle at 50% 50%, rgba(35,42,37,.18), transparent 55%),
+        rgba(0,0,0,.96);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .45s ease, visibility .45s ease;
+}
+
+.video-screen.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.video-shell {
+    width: min(94vw, 1280px);
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000;
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.85),
+        0 0 60px rgba(241,220,167,.05);
+}
+
+.video-shell video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+.close-button {
+    position: absolute;
+    top: 22px;
+    right: 25px;
+    z-index: 110;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    background: rgba(255,255,255,.07);
+    color: white;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.close-button:hover {
+    background: rgba(255,255,255,.13);
+}
+
+.video-title {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: 11px;
+    letter-spacing: .32em;
+    margin-left: .32em;
+    color: rgba(241,220,167,.52);
+    pointer-events: none;
+}
+
+@media (max-width: 700px) {
+    .card {
+        width: 88%;
+        padding: 55px 25px;
+        border-radius: 20px;
+    }
+
+    .eyebrow {
+        font-size: 9px;
+        letter-spacing: .32em;
+        margin-left: .32em;
+    }
+
+    h1 {
+        font-size: 46px;
+    }
+
+    .message {
+        font-size: 14px;
+    }
+
+    .watch-button {
+        padding: 14px 25px;
+    }
+
+    .video-screen {
+        padding: 0;
+    }
+
+    .video-shell {
+        width: 100vw;
+        max-width: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .close-button {
+        top: max(14px, env(safe-area-inset-top));
+        right: 15px;
+        background: rgba(0,0,0,.42);
+    }
+
+    .video-title {
+        bottom: max(10px, env(safe-area-inset-bottom));
+    }
+}
+
+@media (max-width: 420px) {
+    .card {
+        padding: 48px 20px;
+    }
+
+    h1 {
+        font-size: 42px;
+    }
+
+    .watch-button {
+        margin-top: 30px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .video-screen,
+    .watch-button {
+        transition: none;
+    }
+}
