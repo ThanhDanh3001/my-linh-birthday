@@ -33,6 +33,18 @@
     <section class="video-screen" id="videoScreen" aria-hidden="true">
         <button class="close-button" id="closeButton" type="button" aria-label="Đóng">×</button>
 
+        <div class="letter-scene" id="letterScene" aria-hidden="false">
+            <div class="letter-kicker">A LITTLE NOTE FOR YOU</div>
+            <div class="letter-paper">
+                <div class="letter-mark">✦</div>
+                <p class="letter-line line-one">Có những điều em không biết phải nói thế nào…</p>
+                <p class="letter-line line-two">nên em chọn gửi vào món quà nhỏ này.</p>
+                <p class="letter-line line-three">Mong chị sẽ luôn có thật nhiều lý do để mỉm cười.</p>
+                <div class="letter-sign">Dành riêng cho <span>Mỹ Linh</span></div>
+            </div>
+            <button class="letter-button" id="letterButton" type="button">MỞ MÓN QUÀ <span>→</span></button>
+        </div>
+
         <div class="video-shell">
             <video
                 id="birthdayVideo"
@@ -48,6 +60,13 @@
         </div>
 
         <div class="video-title">MỸ LINH</div>
+        <div class="ending-scene" id="endingScene" aria-hidden="true">
+            <div class="ending-kicker">FOR SOMEONE SPECIAL</div>
+            <div class="ending-rule"></div>
+            <div class="ending-message">Mong chị luôn hạnh phúc.</div>
+            <div class="ending-sign">— Một người luôn trân trọng chị —</div>
+            <button class="replay-button" id="replayButton" type="button">XEM LẠI ↻</button>
+        </div>
     </section>
 </div>
 
@@ -57,16 +76,28 @@ const closeButton = document.getElementById("closeButton");
 const videoScreen = document.getElementById("videoScreen");
 const video = document.getElementById("birthdayVideo");
 const giftCard = document.getElementById("giftCard");
+const letterScene = document.getElementById("letterScene");
+const letterButton = document.getElementById("letterButton");
+const endingScene = document.getElementById("endingScene");
+const replayButton = document.getElementById("replayButton");
 
 function openVideo() {
     videoScreen.classList.add("show");
     videoScreen.setAttribute("aria-hidden", "false");
     document.body.classList.add("video-open");
     giftCard.classList.add("hide-card");
-
+    letterScene.classList.remove("hide");
+    letterScene.setAttribute("aria-hidden", "false");
+    endingScene.classList.remove("show");
+    endingScene.setAttribute("aria-hidden", "true");
+    video.pause();
     video.currentTime = 0;
+}
 
-    // Play after the user's tap. This is allowed by mobile browsers.
+function startMovie() {
+    letterScene.classList.add("hide");
+    letterScene.setAttribute("aria-hidden", "true");
+    video.currentTime = 0;
     video.play().catch(() => {});
 }
 
@@ -77,9 +108,19 @@ function closeVideo() {
     videoScreen.setAttribute("aria-hidden", "true");
     document.body.classList.remove("video-open");
     giftCard.classList.remove("hide-card");
+    endingScene.classList.remove("show");
+}
+
+function replayMovie() {
+    endingScene.classList.remove("show");
+    endingScene.setAttribute("aria-hidden", "true");
+    video.currentTime = 0;
+    video.play().catch(() => {});
 }
 
 watchButton.addEventListener("click", openVideo);
+letterButton.addEventListener("click", startMovie);
+replayButton.addEventListener("click", replayMovie);
 closeButton.addEventListener("click", closeVideo);
 
 document.addEventListener("keydown", (event) => {
@@ -89,7 +130,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 video.addEventListener("ended", () => {
-    // Keep the final frame visible; the viewer can replay from the controls.
+    endingScene.classList.add("show");
+    endingScene.setAttribute("aria-hidden", "false");
 });
 </script>
 
